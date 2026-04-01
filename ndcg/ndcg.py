@@ -2,12 +2,12 @@ import math
 import numpy as np
 
 def formula(relevance_scores, k):
-    res = 0
-    for i in range(k):
-        gain = (2**relevance_scores[i] - 1)
-        dis = (np.log2(i+2))
-        res +=  gain / dis
-    return res
+    relevance_scores = relevance_scores[:k]
+
+    gains = 2**relevance_scores - 1
+
+    discounts = np.log2(np.arange(len(relevance_scores)) + 2)
+    return np.sum(gains / discounts)
     
 def ndcg(relevance_scores, k):
     """
